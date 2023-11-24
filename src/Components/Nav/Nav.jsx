@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { BsMenuButtonWideFill } from "react-icons/bs";
 
 const Nav = () => {
