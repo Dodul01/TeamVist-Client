@@ -13,7 +13,7 @@ const Nav = () => {
 
 
   return (
-    <div className=''>
+    <div>
       <div className='flex justify-between text-[#051d2a] mx-1 border-b p-4 shadow-sm'>
         <div>
           <h2 className='font-bold text-xl'>TeamVista</h2>
