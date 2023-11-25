@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { BsMenuButtonWideFill } from "react-icons/bs";
 
 const Nav = () => {
@@ -7,8 +7,8 @@ const Nav = () => {
 
   const links = <>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/'>Home</NavLink>
-    <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/'>Dashbord</NavLink>
-    <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/'>Contact Us</NavLink>
+    <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/dashbord'>Dashbord</NavLink>
+    <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/contactUs'>Contact Us</NavLink>
   </>
 
 
@@ -22,7 +22,9 @@ const Nav = () => {
           <div className='hidden lg:block md:block'>
             {links}
           </div>
-          <button className='ml-3 text-lg font-medium border-2 border-solid border-[#051d2a] rounded-lg px-3 hover:bg-[#051d2a] hover:text-white transition'>Sign Up</button>
+          <Link to='/signUp'>
+            <button className='ml-3 text-lg font-medium border-2 border-solid border-[#051d2a] rounded-lg px-3 hover:bg-[#051d2a] hover:text-white transition'>Sign Up</button>
+          </Link>
           <div onClick={() => setIsOpen(!isOpen)}>
             <BsMenuButtonWideFill className='text-2xl m-2 font-[#051d2a] lg:hidden md:hidden block' />
           </div>
