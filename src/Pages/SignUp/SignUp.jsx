@@ -26,12 +26,23 @@ const SignUp = () => {
           </div>
           <div className="flex flex-col">
             <label className="font-semibold">Email</label>
-            <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("email", { required: true })} type="email" placeholder="Your Name" />
+            <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("email", { required: true })} type="email" placeholder="Your Email" />
             {errors.email && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Email required.</p>}
           </div>
           <div className="flex flex-col">
             <label className="font-semibold">Upload Photo</label>
             <input className="h-10 border rounded-lg p-1 outline-none my-1" type="file" placeholder="Upload Photo" />
+          </div>
+
+
+          <div className="flex flex-col">
+            <label className="font-semibold">User Role</label>
+            <select className="h-10 border rounded-lg p-1 outline-none my-1">
+              <option value="null">Select Your Role</option>
+              <option value="employee">Employee</option>
+              <option value="hr">HR (Human Resources)</option>
+            </select>
+            {errors.password && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Password required.</p>}
           </div>
           <div className="flex flex-col">
             <label className="font-semibold">Password</label>
