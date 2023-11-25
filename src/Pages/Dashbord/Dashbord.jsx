@@ -1,8 +1,6 @@
-import React from 'react'
-
 const Dashbord = () => {
   return (
-    <div>
+    <div className='min-h-screen mx-5'>
       Dashbord
     </div>
   )

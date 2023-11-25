@@ -1,12 +1,27 @@
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiWarning } from "react-icons/ci";
+import useAppContext from "../../hooks/useAppContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const SignUp = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { signUpUser } = useAppContext();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data);
+    signUpUser(data.email, data.password)
+      .then((user) => {
+        console.log(user);
+        toast.success('User created sucessfully')
+      })
+      .catch((error) => {
+        toast.error('can not sign up')
+        console.log(error);
+      })
+
+      navigate('/dashbord');
+      reset();
   }
 
   return (
@@ -55,6 +70,7 @@ const SignUp = () => {
           </div>
         </form>
       </div>
+      <Toaster />
     </div>
   )
 }
