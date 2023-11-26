@@ -1,16 +1,27 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { BsMenuButtonWideFill } from "react-icons/bs";
+import useAppContext from '../../hooks/useAppContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Nav = () => {
+  const { user, signOutUser } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
-
   const links = <>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/'>Home</NavLink>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/dashbord'>Dashbord</NavLink>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/contactUs'>Contact Us</NavLink>
   </>
 
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success('Sign Out Sucessfull')
+      })
+      .catch(() => {
+        toast.error('Can not Sign Out Sucessfully')
+      })
+  }
 
   return (
     <div>
@@ -22,9 +33,22 @@ const Nav = () => {
           <div className='hidden lg:block md:block'>
             {links}
           </div>
-          <Link to='/signUp'>
-            <button className='ml-3 text-lg font-medium border-2 border-solid border-[#051d2a] rounded-lg px-3 hover:bg-[#051d2a] hover:text-white transition'>Sign Up</button>
-          </Link>
+          <div>
+            {
+              user && <div className='flex'>
+                <p>{user?.displayName}</p>
+                <img className='h-[50px] w-[50px] rounded-full object-cover' src={user?.photoURL} alt="" />
+              </div>
+            }
+          </div>
+          {
+            user ?
+              <button onClick={handleSignOut} className='ml-3 text-lg font-medium border-2 border-solid border-[#051d2a] rounded-lg px-3 hover:bg-[#051d2a] hover:text-white transition'>Sign Out</button>
+              :
+              <Link to='/signUp'>
+                <button className='ml-3 text-lg font-medium border-2 border-solid border-[#051d2a] rounded-lg px-3 hover:bg-[#051d2a] hover:text-white transition'>Sign Up</button>
+              </Link>
+          }
           <div onClick={() => setIsOpen(!isOpen)}>
             <BsMenuButtonWideFill className='text-2xl m-2 font-[#051d2a] lg:hidden md:hidden block' />
           </div>
@@ -37,6 +61,7 @@ const Nav = () => {
           {links}
         </div>
       </div>
+      <Toaster />
     </div>
   )
 }

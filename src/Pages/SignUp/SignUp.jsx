@@ -3,25 +3,46 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiWarning } from "react-icons/ci";
 import useAppContext from "../../hooks/useAppContext";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+
+const image_hoisting_key = "8aa448c2476ccf0f8d747d7c7bb441d0";
+const image_hoisting_api = "https://api.imgbb.com/1/upload";
 
 const SignUp = () => {
-  const { signUpUser } = useAppContext();
+  const { signUpUser, updateUserProfile } = useAppContext();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+
+    const imageFile = { image: data.user_image[0] }
+
+    const res = await axios.post('https://api.imgbb.com/1/upload?key=8aa448c2476ccf0f8d747d7c7bb441d0', imageFile, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    })
+
+    const profileImage = res?.data?.data?.display_url;
+
     signUpUser(data.email, data.password)
       .then((user) => {
-        console.log(user);
-        toast.success('User created sucessfully')
+          updateUserProfile(data.name, profileImage)
+            .then(()=>{
+              console.log(user);
+              toast.success('User created sucessfully')
+            })
+            .catch((error)=>{
+              console.log(error);
+            })
       })
       .catch((error) => {
         toast.error('can not sign up')
         console.log(error);
       })
 
-      navigate('/dashbord');
-      reset();
+    navigate('/dashbord');
+    reset();
   }
 
   return (
@@ -46,13 +67,13 @@ const SignUp = () => {
           </div>
           <div className="flex flex-col">
             <label className="font-semibold">Upload Photo</label>
-            <input className="h-10 border rounded-lg p-1 outline-none my-1" type="file" placeholder="Upload Photo" />
+            <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("user_image", { required: true })} type="file" placeholder="Upload Photo" />
           </div>
 
 
           <div className="flex flex-col">
             <label className="font-semibold">User Role</label>
-            <select className="h-10 border rounded-lg p-1 outline-none my-1">
+            <select {...register("user_role", { required: true })} className="h-10 border rounded-lg p-1 outline-none my-1">
               <option value="null">Select Your Role</option>
               <option value="employee">Employee</option>
               <option value="hr">HR (Human Resources)</option>
