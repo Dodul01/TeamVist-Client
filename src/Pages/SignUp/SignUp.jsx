@@ -65,6 +65,19 @@ const SignUp = () => {
             <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("email", { required: true })} type="email" placeholder="Your Email" />
             {errors.email && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Email required.</p>}
           </div>
+          
+          <div className="flex flex-col">
+            <label className="font-semibold">Salary</label>
+            <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("salary", { required: true })} type="number" placeholder="Insert Your Salary Ammount Here" />
+            {errors.salary && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Salary ammount is required.</p>}
+          </div>
+          
+          <div className="flex flex-col">
+            <label className="font-semibold">Bank Account Number</label>
+            <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("bankAccount", { required: true })} type="number" placeholder="Insert Your Bank Account Number" />
+            {errors.bankAccount && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Bank Account Number is required.</p>}
+          </div>
+
           <div className="flex flex-col">
             <label className="font-semibold">Upload Photo</label>
             <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("user_image", { required: true })} type="file" placeholder="Upload Photo" />
@@ -73,12 +86,12 @@ const SignUp = () => {
 
           <div className="flex flex-col">
             <label className="font-semibold">User Role</label>
-            <select {...register("user_role", { required: true })} className="h-10 border rounded-lg p-1 outline-none my-1">
+            <select {...register("userRole", { required: true })} className="h-10 border rounded-lg p-1 outline-none my-1">
               <option value="null">Select Your Role</option>
               <option value="employee">Employee</option>
               <option value="hr">HR (Human Resources)</option>
             </select>
-            {errors.password && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Password required.</p>}
+            {errors.userRole && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Password required.</p>}
           </div>
           <div className="flex flex-col">
             <label className="font-semibold">Password</label>
