@@ -9,7 +9,7 @@ import axios from "axios";
 // const image_hoisting_api = "https://api.imgbb.com/1/upload";
 
 const SignUp = () => {
-  const { signUpUser, updateUserProfile } = useAppContext();
+  const { signUpUser, updateUserProfile , setIsLoading} = useAppContext();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -48,6 +48,7 @@ const SignUp = () => {
               .then((res) => res.json())
               .then(data => {
                 if (data.insertedId) {
+                  setIsLoading(false);
                   toast.success('User created sucessfully')
                   navigate('/dashbord');
                 }

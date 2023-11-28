@@ -39,6 +39,7 @@ const AppContextProvider = ({ children }) => {
     signOutUser,
     updateUserProfile,
     isLoading,
+    setIsLoading,
   }
 
 

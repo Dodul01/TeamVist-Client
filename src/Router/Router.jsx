@@ -6,6 +6,11 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
 import SignUp from "../Pages/SignUp/SignUp";
 import SignIn from "../Pages/SignIn/SignIn";
 import PrivateRoute from "./PrivateRouter";
+import EmployeeDetails from "../Components/EmployeeDetails/EmployeeDetails";
+import EmployeeList from "../Pages/EmployeeList/EmployeeList";
+import Progress from "../Pages/Progress/Progress";
+import WorkSheet from "../Components/WorkSheet/WorkSheet";
+import PaymentHistory from "../Pages/PaymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +28,8 @@ const router = createBrowserRouter([
       {
         path: '/contactUs',
         element: <ContactUs />
-      }
+      },
+
     ]
   },
   {
@@ -33,6 +39,32 @@ const router = createBrowserRouter([
   {
     path: '/signIn',
     element: <SignIn />
+  },
+  {
+    path: '/dashbord',
+    element: <PrivateRoute><Dashbord /></PrivateRoute>,
+    children: [
+      {
+        path: '/dashbord/details/:email',
+        element: <EmployeeDetails />
+      },
+      {
+        path: '/dashbord',
+        element: <EmployeeList />
+      },
+      {
+        path: '/dashbord/progress',
+        element: <Progress />
+      },
+      {
+        path: '/dashbord/workSheet',
+        element: <WorkSheet />
+      },
+      {
+        path: '/dashbord/paymentHistory',
+        element: <PaymentHistory />
+      }
+    ]
   }
 ])
 
