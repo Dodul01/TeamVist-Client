@@ -5,11 +5,32 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { FaSquareXmark } from "react-icons/fa6";
 import { MdOutlinePayment } from "react-icons/md";
 import { BiSolidUserDetail } from "react-icons/bi";
+import WorkSheet from "../../Components/WorkSheet/WorkSheet";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const EmployeeList = () => {
   const { user, isLoading } = useAppContext()
   const [userData, setUserData] = useState({});
   const [allUsers, setAllUsers] = useState([])
+
+
+  const handleVerify = (data) => {
+    fetch(`http://localhost:5000/users?email=${user?.email}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/JSON'
+      },
+      body: JSON.stringify({ data, isVerifyed: !data.isVerifyed })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.modifiedCount === 1) {
+          toast.success('User verification updated.')
+        }
+      })
+  }
+
 
   useEffect(() => {
     const unsubscribe = () => {
@@ -26,7 +47,7 @@ const EmployeeList = () => {
     return () => {
       unsubscribe();
     }
-  }, [user, isLoading])
+  }, [user, isLoading, allUsers])
 
   return (
     <div className='min-h-screen mx-5'>
@@ -59,34 +80,29 @@ const EmployeeList = () => {
                         <td className="text-start p-1 border">{data.bankAccount}</td>
                         <td className="text-center p-1 border">{data.isVerifyed ?
                           <div className="text-2xl font-semibold text-red-500">
-                            <IoIosCheckmarkCircle onClick={() => alert(data.name + ' clicked on button')} className="text-3xl text-green-500"></IoIosCheckmarkCircle>
+                            <IoIosCheckmarkCircle onClick={() => handleVerify(data)} className="text-3xl text-green-500 cursor-pointer"></IoIosCheckmarkCircle>
                           </div>
-                          : <FaSquareXmark onClick={() => alert('you clicked on ' + data.name + ' button')} className="text-3xl text-red-500 cursor-pointer" />
+                          : <FaSquareXmark onClick={() => handleVerify(data)} className="text-3xl text-red-500 cursor-pointer" />
                         }</td>
                         <td className="flex p-1 border">
                           <button className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><MdOutlinePayment /> Pay</button>
-                          <Link to={`/dashbord/details/${data.email}`}  className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><BiSolidUserDetail /> Details</Link>
+                          <Link to={`/dashbord/details/${data.email}`} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><BiSolidUserDetail /> Details</Link>
                         </td>
                       </tr>
                     );
                   })
                 }
-                
               </table>
             </div>
           </div>
           :
           <div className="flex">
-            {/* <div className="w-1/4 flex flex-col">
-              <NavLink to='/paymentHistory'>Payment History</NavLink>
-              <NavLink to='/workSheet'>Work Sheet</NavLink>
-            </div> */}
-            <div className="w-3/4">
-              <h1 className="text-3xl font-bold">Your Work Here</h1>
+            <div>
+              <WorkSheet />
             </div>
           </div>
       }
-
+      <Toaster />
     </div>
   )
 }

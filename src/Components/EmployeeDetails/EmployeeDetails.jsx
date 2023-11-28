@@ -25,7 +25,9 @@ const EmployeeDetails = () => {
               <h3 className="text-xl font-semibold">{userInfo.userRole}</h3>
             </div>
           </div>
-          <h1></h1>
+
+          <h1 className="text-xl font-semibold mt-5 mx-2">Complited Work</h1>
+
         </div>
       }
     </div>
