@@ -20,14 +20,14 @@ const EmployeeDetails = () => {
               <img className="h-[100px] w-[100px] object-cover" src={userInfo.user_image} alt="user_image" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold">{userInfo.name} ( {userInfo?.isVerifyed == true ?  <span className="text-green-500">verifyed</span> : <span className="text-red-500">unverifyed</span>} ) </h3>
+              <h3 className="text-xl font-semibold">{userInfo.name} ( {userInfo?.isVerifyed == true ? <span className="text-green-500">verifyed</span> : <span className="text-red-500">unverifyed</span>} ) </h3>
               <h3 className="text-xl font-semibold">{userInfo.email}</h3>
               <h3 className="text-xl font-semibold">{userInfo.userRole}</h3>
             </div>
           </div>
 
           <h1 className="text-xl font-semibold mt-5 mx-2">Complited Work</h1>
-
+         
         </div>
       }
     </div>

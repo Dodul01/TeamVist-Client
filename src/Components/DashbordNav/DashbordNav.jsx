@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const DashbordNav = () => {
     const { user, isLoading } = useAppContext()
     const [userData, setUserData] = useState({});
-    const {signOutUser} = useAppContext();
+    const { signOutUser } = useAppContext();
     const navigate = useNavigate();
 
     const handleSignOut = () => {
@@ -38,24 +38,45 @@ const DashbordNav = () => {
                 </div>
             </div>
 
-            {userData == {} ? <P>Loading...</P> :
-                userData?.userRole === 'hr'
-                    ?
-                    <div className="flex mt-2">
-                        <div className="w-[300px] flex flex-col">
-                            {/* hr nav bar */}
-                            <NavLink className='text-lg font-medium' to='/dashbord'>Employee List</NavLink>
-                            <NavLink className='text-lg font-medium' to='/dashbord/progress'>Progress</NavLink>
-                        </div>
-                    </div>
-                    :
-                    <div className="flex">
-                        <div className="w-[300px] flex flex-col">
-                            {/* Employee Nav Link */}
-                            <NavLink className='text-lg font-medium' to='/dashbord/paymentHistory'>Payment History</NavLink>
-                            <NavLink className='text-lg font-medium' to='/dashbord/workSheet'>Work Sheet</NavLink>
-                        </div>
-                    </div>
+            {userData?.userRole === 'hr' && <div className="flex p-1 mt-2">
+                <div className="w-[300px] flex flex-col">
+                    {/* hr nav bar */}
+                    <NavLink className='text-lg font-medium' to='/dashbord'>Employee List</NavLink>
+                    <NavLink className='text-lg font-medium' to='/dashbord/progress'>Progress</NavLink>
+                </div>
+            </div>}
+            {userData?.userRole === 'employee' && <div className=" flex p-1">
+                <div className="w-[300px] flex flex-col">
+                    {/* Employee Nav Link */}
+                    <NavLink className='text-lg font-medium' to='/dashbord/paymentHistory'>Payment History</NavLink>
+                    <NavLink className='text-lg font-medium' to='/dashbord/workSheet'>Work Sheet</NavLink>
+                </div>
+            </div>}
+            {userData?.userRole === 'admin' && <div className="flex p-1">
+                <div className="w-[300px] flex flex-col">
+                    {/* admin Nav Link */}
+                    <NavLink className='text-lg font-medium' to='/dashbord' >All Users</NavLink>
+                </div>
+            </div>}
+
+            {userData == {} ? <P>Loading...</P> : ''
+                // userData?.userRole === 'hr'
+                //     ?
+                //     <div className="flex mt-2">
+                //         <div className="w-[300px] flex flex-col">
+                //             {/* hr nav bar */}
+                //             <NavLink className='text-lg font-medium' to='/dashbord'>Employee List</NavLink>
+                //             <NavLink className='text-lg font-medium' to='/dashbord/progress'>Progress</NavLink>
+                //         </div>
+                //     </div>
+                //     :
+                //     <div className="flex">
+                //         <div className="w-[300px] flex flex-col">
+                //             {/* Employee Nav Link */}
+                //             <NavLink className='text-lg font-medium' to='/dashbord/paymentHistory'>Payment History</NavLink>
+                //             <NavLink className='text-lg font-medium' to='/dashbord/workSheet'>Work Sheet</NavLink>
+                //         </div>
+                //     </div>
             }
             <Toaster />
         </div>

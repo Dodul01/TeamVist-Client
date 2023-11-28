@@ -1,13 +1,52 @@
 import { useForm } from "react-hook-form"
 import { CiWarning } from "react-icons/ci";
+import useAppContext from "../../hooks/useAppContext";
+import toast, { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const WorkSheet = () => {
+    const { user } = useAppContext();
+    const [tasks, setTasks] = useState([]);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        const task = {
+            task: data.task,
+            hoursWorked: data.hoursWorked,
+            date: data.date,
+            userEmail: user?.email,
+            useName: user?.displayName
+        }
+
+        fetch('http://localhost:5000/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    toast.success('Data added sucessfully.')
+                    fetch(`http://localhost:5000/getTask?email=${user?.email}`)
+                        .then(res => res.json())
+                        .then(data => setTasks(data))
+
+                }
+            })
+        // TODO : store data on data base
+
+
+
         reset()
     }
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/getTask?email=${user?.email}`)
+            .then(res => res.json())
+            .then(data => setTasks(data))
+    }, [tasks])
 
     return (
         <div className='p-2'>
@@ -21,7 +60,7 @@ const WorkSheet = () => {
                         <option value="sales">Sales</option>
                         <option value="support">Support</option>
                         <option value="content">Content</option>
-                        <option value=" paperWork">Paper work</option>
+                        <option value="paperWork">Paper work</option>
                     </select>
                     {errors.task && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Task name required.</p>}
                 </div>
@@ -50,14 +89,17 @@ const WorkSheet = () => {
                             <th className='text-start border p-2'>Hours Worked</th>
                             <th className='text-start border p-2'>Date</th>
                         </tr>
-                        <tr>
-                            <td>16</td>
-                            <td>14</td>
-                            <td>10</td>
-                        </tr>
+                        {
+                            tasks.map((work)=> <tr>
+                                <td>{work.task}</td>
+                                <td>{work.hoursWorked}</td>
+                                <td>{work.date}</td>
+                            </tr>)
+                        }
                     </table>
                 </div>
             </div>
+            <Toaster />
         </div>
     )
 }
