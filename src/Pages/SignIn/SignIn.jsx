@@ -5,22 +5,21 @@ import toast, { Toaster } from "react-hot-toast";
 import useAppContext from "../../hooks/useAppContext";
 
 const SignIn = () => {
-  const { signInUser } = useAppContext();
-  const { register, handleSubmit, reset,formState: { errors } } = useForm();
+  const { signInUser, setUserRole } = useAppContext();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     signInUser(data.email, data.password)
-      .then((user) => {
-        console.log(user)
+      .then((userCurrent) => {
         toast.success('Log In Sucessfully');
+        navigate('/dashbord')
       })
       .catch((error) => {
         console.log(error);
         toast.error('Can not log in')
       })
 
-    navigate('/dashbord')
     reset()
   }
 

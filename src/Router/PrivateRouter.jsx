@@ -9,11 +9,13 @@ const PrivateRoute = ({ children }) => {
         return <div className="h-screen w-screen">
             <h1 className="text-2xl font-bold text-center">Loading...</h1>
         </div>
-    } else if (user) {
-        return children
-    } else {
-        return <Navigate  to="/signUp"/>
     }
+
+    if (user) {
+        return children
+    }
+
+    return <Navigate to="/signUp" />
 }
 
 export default PrivateRoute;

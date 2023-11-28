@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import useAppContext from '../../hooks/useAppContext';
 import toast, { Toaster } from 'react-hot-toast';
@@ -7,6 +7,9 @@ import toast, { Toaster } from 'react-hot-toast';
 const Nav = () => {
   const { user, signOutUser } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+
   const links = <>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/'>Home</NavLink>
     <NavLink className='text-lg font-medium mx-1 hover:border-b-2 hover:border-b-[#051d2a] transition' to='/dashbord'>Dashbord</NavLink>
@@ -17,6 +20,7 @@ const Nav = () => {
     signOutUser()
       .then(() => {
         toast.success('Sign Out Sucessfull')
+        navigate('/signIn')
       })
       .catch(() => {
         toast.error('Can not Sign Out Sucessfully')

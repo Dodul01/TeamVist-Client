@@ -5,8 +5,8 @@ import useAppContext from "../../hooks/useAppContext";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-const image_hoisting_key = "8aa448c2476ccf0f8d747d7c7bb441d0";
-const image_hoisting_api = "https://api.imgbb.com/1/upload";
+// const image_hoisting_key = "8aa448c2476ccf0f8d747d7c7bb441d0";
+// const image_hoisting_api = "https://api.imgbb.com/1/upload";
 
 const SignUp = () => {
   const { signUpUser, updateUserProfile } = useAppContext();
@@ -14,7 +14,6 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-
     const imageFile = { image: data.user_image[0] }
 
     const res = await axios.post('https://api.imgbb.com/1/upload?key=8aa448c2476ccf0f8d747d7c7bb441d0', imageFile, {
@@ -27,21 +26,43 @@ const SignUp = () => {
 
     signUpUser(data.email, data.password)
       .then((user) => {
-          updateUserProfile(data.name, profileImage)
-            .then(()=>{
-              console.log(user);
-              toast.success('User created sucessfully')
+        updateUserProfile(data.name, profileImage)
+          .then(() => {
+            const currentUser = {
+              name: user?.user?.displayName,
+              user_image: user?.user?.photoURL,
+              email: data.email,
+              isVerifyed: false,
+              salary: data?.salary,
+              bankAccount: data?.bankAccount,
+              userRole: data?.userRole,
+            }
+
+            fetch('http://localhost:5000/users', {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(currentUser)
             })
-            .catch((error)=>{
-              console.log(error);
-            })
+              .then((res) => res.json())
+              .then(data => {
+                if (data.insertedId) {
+                  toast.success('User created sucessfully')
+                  navigate('/dashbord');
+                }
+              })
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       })
       .catch((error) => {
         toast.error('can not sign up')
         console.log(error);
       })
 
-    navigate('/dashbord');
+   
     reset();
   }
 
@@ -65,13 +86,13 @@ const SignUp = () => {
             <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("email", { required: true })} type="email" placeholder="Your Email" />
             {errors.email && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Email required.</p>}
           </div>
-          
+
           <div className="flex flex-col">
             <label className="font-semibold">Salary</label>
             <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("salary", { required: true })} type="number" placeholder="Insert Your Salary Ammount Here" />
             {errors.salary && <p className="text-red-500 my-1 flex items-center"><CiWarning className="text-xl" /> Salary ammount is required.</p>}
           </div>
-          
+
           <div className="flex flex-col">
             <label className="font-semibold">Bank Account Number</label>
             <input className="h-10 border rounded-lg p-1 outline-none my-1" {...register("bankAccount", { required: true })} type="number" placeholder="Insert Your Bank Account Number" />

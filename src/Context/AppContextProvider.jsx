@@ -7,22 +7,18 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const auth = getAuth(app);
 
-  const auth = getAuth(app)
-
-  // TODO
-
-  // SIGN UP [DONE]
   const signUpUser = (email, password) => {
     setIsLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)
-  }
-  // SIGN IN [DONE]
+  };
+
   const signInUser = (email, password) => {
     setIsLoading(true);
     return signInWithEmailAndPassword(auth, email, password)
   }
-  // SIGN OUT
+
   const signOutUser = () => {
     setIsLoading(true);
     setUser(null)
@@ -30,12 +26,10 @@ const AppContextProvider = ({ children }) => {
   }
 
 
-  // UPDATE USER PROFILE
   const updateUserProfile = (name, photo) => {
     setIsLoading(true);
     return updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
   }
-  // GOOGLE LOGIN 
 
 
   const appInfo = {
@@ -43,21 +37,20 @@ const AppContextProvider = ({ children }) => {
     signInUser,
     user,
     signOutUser,
-    updateUserProfile
+    updateUserProfile,
+    isLoading,
   }
 
 
-  // ON AUTH STATE CHANGE[DONE]
   useEffect(() => {
     const unsubscribe = () => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          setIsLoading(false);
           setUser(user);
-          console.log(user);
+          setIsLoading(false);
         } else {
-          setIsLoading(false)
           console.log('User Not Found');
+          setIsLoading(false)
         }
       })
     }
@@ -65,7 +58,7 @@ const AppContextProvider = ({ children }) => {
     return () => {
       unsubscribe()
     }
-  }, [])
+  }, [isLoading])
 
   return (
     <AppContext.Provider value={appInfo}>
