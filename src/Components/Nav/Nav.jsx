@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { BsMenuButtonWideFill } from "react-icons/bs";
 import useAppContext from '../../hooks/useAppContext';
 import toast, { Toaster } from 'react-hot-toast';
+import brandIcon from '../../../public/brandIcon.png'
 
 const Nav = () => {
   const { user, signOutUser } = useAppContext();
@@ -30,7 +31,8 @@ const Nav = () => {
   return (
     <div>
       <div className='flex justify-between text-[#051d2a] mx-1 border-b p-4 shadow-sm'>
-        <div>
+        <div className='flex items-center gap-2'>
+          <img className='h-[20px]' src={brandIcon} alt="" />
           <h2 className='font-bold text-xl'>TeamVista</h2>
         </div>
         <div className='flex items-center justify-center'>
