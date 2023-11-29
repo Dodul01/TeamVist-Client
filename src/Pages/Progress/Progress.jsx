@@ -7,7 +7,7 @@ const Progress = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
 
-  const currentMonth = new Date().getMonth() + 1;
+  // const currentMonth = new Date().getMonth() + 1;
 
 
   const handleSelectChange = (e) => {
@@ -38,10 +38,11 @@ const Progress = () => {
         <h1 className='text-2xl font-bold'>Total : {tasks.length}</h1>
       </div>
 
-      <div>
-        <h1 className='text-2xl font-bold'>Filter tasks</h1>
-        <select onChange={handleSelectChange} value={selectedUser || 'null'}>
-          <option value='null'>Filter By User</option>
+      <div className='flex items-center gap-2 my-4'>
+        <h1 className='text-xl font-smibold'>Filter tasks</h1>
+
+        <select className='h-10 border rounded-lg p-1 outline-none my-1' onChange={handleSelectChange} value={selectedUser || 'null'}>
+          <option value='null'>Filter By Name</option>
           {
             users.map(user => {
               if (user.userRole == 'hr') {
@@ -57,7 +58,7 @@ const Progress = () => {
           }
         </select>
 
-        <select onChange={handleSelectMonth} value={selectedMonth}>
+        <select className='h-10 border rounded-lg p-1 outline-none my-1' onChange={handleSelectMonth} value={selectedMonth}>
           <option value="null">Filter By Month</option>
           <option value="01">January</option>
           <option value="02">February</option>

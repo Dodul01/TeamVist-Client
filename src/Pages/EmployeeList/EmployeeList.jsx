@@ -9,12 +9,14 @@ import WorkSheet from "../../Components/WorkSheet/WorkSheet";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Admin from "../Admin/Admin";
+import Modal from "../../Components/Modal/Modal";
 
 const EmployeeList = () => {
   const { user, isLoading } = useAppContext()
   const [userData, setUserData] = useState({});
   const [allUsers, setAllUsers] = useState([])
-
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const handleVerify = (data) => {
     fetch(`http://localhost:5000/users?email=${user?.email}`, {
@@ -32,6 +34,10 @@ const EmployeeList = () => {
       })
   }
 
+  const handleModal = (data) => {
+    setModalData(data);
+    setShowModal(true);
+  }
 
   useEffect(() => {
     const unsubscribe = () => {
@@ -43,7 +49,6 @@ const EmployeeList = () => {
         .then((res) => res.json())
         .then(data => setAllUsers(data))
     }
-
 
     return () => {
       unsubscribe();
@@ -65,7 +70,7 @@ const EmployeeList = () => {
             </tr>
             {
               allUsers.map((data) => {
-                if(data.userRole === 'admin'){
+                if (data.userRole === 'admin') {
                   return null;
                 }
 
@@ -86,7 +91,7 @@ const EmployeeList = () => {
                       : <FaSquareXmark onClick={() => handleVerify(data)} className="text-3xl text-red-500 cursor-pointer" />
                     }</td>
                     <td className="flex p-1 border">
-                      <button className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><MdOutlinePayment /> Pay</button>
+                      <button onClick={()=> handleModal(data)} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition' disabled={!data.isVerifyed}><MdOutlinePayment /> Pay</button>
                       <Link to={`/dashbord/details/${data.email}`} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><BiSolidUserDetail /> Details</Link>
                     </td>
                   </tr>
@@ -94,6 +99,7 @@ const EmployeeList = () => {
               })
             }
           </table>
+          {showModal && <Modal showModal={showModal} setShowModal={setShowModal} userData={modalData} />}
         </div>
       </div>}
       {userData?.userRole === 'employee' && <div className="flex">
