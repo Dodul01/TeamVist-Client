@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Modal = ({setShowModal, userData }) => {
+const Modal = ({ setShowModal, userData }) => {
     const { name, email, bankAccount, user_image, salary } = userData;
     const [selectedMonth, setSelectedMonth] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
@@ -19,9 +19,23 @@ const Modal = ({setShowModal, userData }) => {
         }
     }
 
-    const handlePaymentConfirm = () =>{
-        setPaymentConfirm(true);
-        console.log({paymentTime: `${selectedMonth}-${selectedYear}`, email });
+    const handlePaymentConfirm = () => {
+
+        const paymentData = { paymentTime: `${selectedMonth}-${selectedYear}`, email, bankAccount, salary, name };
+
+        fetch('http://localhost:5000/paymentInfo', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(paymentData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    setPaymentConfirm(true);
+                }
+            })
     }
 
     return (
@@ -69,18 +83,18 @@ const Modal = ({setShowModal, userData }) => {
                                 <div className="flex gap-2" >
                                     <select className='h-10 border rounded-lg p-1 outline-none my-1' onChange={handleSelectMonth} value={selectedMonth}>
                                         <option value="null">Filter By Month</option>
-                                        <option value="01">January</option>
-                                        <option value="02">February</option>
-                                        <option value="03">March</option>
-                                        <option value="04">April</option>
-                                        <option value="05">May</option>
-                                        <option value="06">June</option>
-                                        <option value="07">July</option>
-                                        <option value="08">August</option>
-                                        <option value="09">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
                                     </select>
                                     <input name="year" className='h-10 border rounded-lg p-1 outline-none my-1' type="number" placeholder="Year" onChange={handleInputChange} value={selectedYear} />
                                 </div>
