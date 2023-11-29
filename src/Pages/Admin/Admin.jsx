@@ -6,6 +6,7 @@ const Admin = ({ data }) => {
     const [firedList, setFiredList] = useState([]);
     const [fired, setFired] = useState(false);
 
+
     const handleMakeHR = (user) => {
         fetch(`http://localhost:5000/makeHR?email=${user?.email}`, {
             method: 'PUT',
@@ -65,7 +66,6 @@ const Admin = ({ data }) => {
                         if (user.isVerifyed == false) {
                             return null
                         }
-
 
                         const isFired = firedList.some((firedUser) => firedUser.email === user.email);
 

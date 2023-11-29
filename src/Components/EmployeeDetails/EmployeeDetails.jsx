@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import Charts from "../Charts/Charts";
 
 const EmployeeDetails = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -26,8 +27,10 @@ const EmployeeDetails = () => {
             </div>
           </div>
 
-          <h1 className="text-xl font-semibold mt-5 mx-2">Complited Work</h1>
-         
+          <div className="mt-8">
+            <Charts email={email}/>
+          </div>
+
         </div>
       }
     </div>

@@ -59,6 +59,7 @@ const EmployeeList = () => {
     <div className='min-h-screen mx-5'>
       {userData?.userRole === 'hr' && <div className="mt-2">
         <div>
+          <h1 className="text-2xl font-semibold my-3 text-center">All Employees</h1>
           <table className="w-full border rounded-full">
             <tr className="border-b">
               <th className="text-start p-1 border">Name</th>

@@ -3,13 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiWarning } from "react-icons/ci";
 import toast, { Toaster } from "react-hot-toast";
 import useAppContext from "../../hooks/useAppContext";
+import { useEffect, useState } from "react";
 
 const SignIn = () => {
   const { signInUser, setUserRole } = useAppContext();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const [firedList, setFiredList] = useState([]);
+
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
+    const isFired = firedList.some((firedUser) => firedUser.email === data.email)
+
+    if(isFired){
+      return toast.error("Sorry Can't Sign In You Are Fired")
+    }
+
     signInUser(data.email, data.password)
       .then((userCurrent) => {
         toast.success('Log In Sucessfully');
@@ -22,6 +31,12 @@ const SignIn = () => {
 
     reset()
   }
+
+  useEffect(()=>{
+    fetch('http://localhost:5000/firedList')
+        .then((res)=> res.json())
+        .then(data => setFiredList(data))
+  },[])
 
   return (
     <div className="flex lg:flex-row flex-col items-center justify-center max-w-[1660px] h-screen gap-4 mx-auto text-[#051d2a]">
