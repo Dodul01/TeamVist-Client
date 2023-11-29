@@ -17,7 +17,7 @@ const PaymentHistory = () => {
   }, [paymentInfo, user])
 
   return (
-    <div>
+    <div className='p-4'>
       <h1 className='text-xl my-5 font-bold text-center'>Your Payment History</h1>
       <table className='w-full border'>
         <tr>

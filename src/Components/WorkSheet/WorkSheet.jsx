@@ -91,9 +91,9 @@ const WorkSheet = () => {
                         </tr>
                         {
                             tasks.map((work)=> <tr>
-                                <td>{work.task}</td>
-                                <td>{work.hoursWorked}</td>
-                                <td>{work.date}</td>
+                                <td className="border">{work.task}</td>
+                                <td className="border">{work.hoursWorked}</td>
+                                <td className="border">{work.date}</td>
                             </tr>)
                         }
                     </table>
