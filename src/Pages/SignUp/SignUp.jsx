@@ -5,11 +5,8 @@ import useAppContext from "../../hooks/useAppContext";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
-// const image_hoisting_key = "8aa448c2476ccf0f8d747d7c7bb441d0";
-// const image_hoisting_api = "https://api.imgbb.com/1/upload";
-
 const SignUp = () => {
-  const { signUpUser, updateUserProfile , setIsLoading} = useAppContext();
+  const { signUpUser, updateUserProfile, setIsLoading } = useAppContext();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -23,6 +20,8 @@ const SignUp = () => {
     })
 
     const profileImage = res?.data?.data?.display_url;
+
+    
 
     signUpUser(data.email, data.password)
       .then((user) => {
@@ -63,7 +62,7 @@ const SignUp = () => {
         console.log(error);
       })
 
-   
+
     reset();
   }
 
