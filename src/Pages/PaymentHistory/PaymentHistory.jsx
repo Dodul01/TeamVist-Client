@@ -11,7 +11,7 @@ const PaymentHistory = () => {
   ];
 
   useEffect(() => {
-    fetch(`http://localhost:5000/paymentInfo?email=${user?.email}`)
+    fetch(`https://team-vista-server.vercel.app/paymentInfo?email=${user?.email}`)
       .then((res) => res.json())
       .then(data => setPaymentInfo(data))
   }, [paymentInfo, user])

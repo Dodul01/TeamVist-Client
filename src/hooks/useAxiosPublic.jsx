@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: "https://team-vista-server.vercel.app"
 })
 
 const useAxiosPublic = () =>{

@@ -44,7 +44,7 @@ const Charts = ({email}) => {
     const [employeeSalary, setEmployeeSalary] = useState([]);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/paymentInfo?email=${email}`)
+        fetch(`https://team-vista-server.vercel.app/paymentInfo?email=${email}`)
         .then((res)=> res.json())
         .then(data => setEmployeeSalary(data))
     },[employeeSalary])

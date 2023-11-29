@@ -19,7 +19,7 @@ const EmployeeList = () => {
   const [modalData, setModalData] = useState({});
 
   const handleVerify = (data) => {
-    fetch(`http://localhost:5000/users?email=${user?.email}`, {
+    fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/JSON'
@@ -41,11 +41,11 @@ const EmployeeList = () => {
 
   useEffect(() => {
     const unsubscribe = () => {
-      fetch(`http://localhost:5000/users?email=${user?.email}`)
+      fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`)
         .then((res) => res.json())
         .then(data => setUserData(data[0]))
 
-      fetch('http://localhost:5000/users')
+      fetch('https://team-vista-server.vercel.app/users')
         .then((res) => res.json())
         .then(data => setAllUsers(data))
     }

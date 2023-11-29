@@ -8,7 +8,7 @@ const Admin = ({ data }) => {
 
 
     const handleMakeHR = (user) => {
-        fetch(`http://localhost:5000/makeHR?email=${user?.email}`, {
+        fetch(`https://team-vista-server.vercel.app/makeHR?email=${user?.email}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/JSON'
@@ -25,7 +25,7 @@ const Admin = ({ data }) => {
     }
 
     const handleFiredUser = (user) => {
-        fetch('http://localhost:5000/firedList', {
+        fetch('https://team-vista-server.vercel.app/firedList', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/JSON'
@@ -42,7 +42,7 @@ const Admin = ({ data }) => {
     }
 
     useEffect(() => {
-        fetch('http://localhost:5000/firedList')
+        fetch('https://team-vista-server.vercel.app/firedList')
         .then((res)=> res.json())
         .then(data => setFiredList(data))
     }, [updateRole, fired])

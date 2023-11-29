@@ -23,7 +23,7 @@ const Modal = ({ setShowModal, userData }) => {
 
         const paymentData = { paymentTime: `${selectedMonth}-${selectedYear}`, email, bankAccount, salary, name };
 
-        fetch('http://localhost:5000/paymentInfo', {
+        fetch('https://team-vista-server.vercel.app/paymentInfo', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

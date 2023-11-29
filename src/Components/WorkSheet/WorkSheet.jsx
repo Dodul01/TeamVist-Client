@@ -18,7 +18,7 @@ const WorkSheet = () => {
             useName: user?.displayName
         }
 
-        fetch('http://localhost:5000/tasks', {
+        fetch('https://team-vista-server.vercel.app/tasks', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -29,7 +29,7 @@ const WorkSheet = () => {
             .then(data => {
                 if (data.insertedId) {
                     toast.success('Data added sucessfully.')
-                    fetch(`http://localhost:5000/getTask?email=${user?.email}`)
+                    fetch(`https://team-vista-server.vercel.app/getTask?email=${user?.email}`)
                         .then(res => res.json())
                         .then(data => setTasks(data))
 
@@ -43,7 +43,7 @@ const WorkSheet = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:5000/getTask?email=${user?.email}`)
+        fetch(`https://team-vista-server.vercel.app/getTask?email=${user?.email}`)
             .then(res => res.json())
             .then(data => setTasks(data))
     }, [tasks])

@@ -33,7 +33,7 @@ const SignIn = () => {
   }
 
   useEffect(()=>{
-    fetch('http://localhost:5000/firedList')
+    fetch('https://team-vista-server.vercel.app/firedList')
         .then((res)=> res.json())
         .then(data => setFiredList(data))
   },[])

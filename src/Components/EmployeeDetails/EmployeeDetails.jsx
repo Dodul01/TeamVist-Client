@@ -7,7 +7,7 @@ const EmployeeDetails = () => {
   const { email } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users?email=${email}`)
+    fetch(`https://team-vista-server.vercel.app/users?email=${email}`)
       .then((res) => res.json())
       .then(data => setUserInfo(data[0]))
   }, [email])

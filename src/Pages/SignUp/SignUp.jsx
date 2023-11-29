@@ -38,7 +38,7 @@ const SignUp = () => {
               userRole: data?.userRole,
             }
 
-            fetch('http://localhost:5000/users', {
+            fetch('https://team-vista-server.vercel.app/users', {
               method: 'POST',
               headers: {
                 'content-type': 'application/json'

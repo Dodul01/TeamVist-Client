@@ -22,11 +22,11 @@ const Progress = () => {
   }
 
   useEffect(() => {
-    fetch('http://localhost:5000/getTask')
+    fetch('https://team-vista-server.vercel.app/getTask')
       .then(res => res.json())
       .then(data => setTasks(data))
 
-    fetch('http://localhost:5000/users')
+    fetch('https://team-vista-server.vercel.app/users')
       .then(res => res.json())
       .then(data => setUsers(data))
   }, [])
