@@ -21,7 +21,7 @@ const SignUp = () => {
 
     const profileImage = res?.data?.data?.display_url;
 
-    
+
 
     signUpUser(data.email, data.password)
       .then((user) => {
@@ -47,9 +47,9 @@ const SignUp = () => {
               .then((res) => res.json())
               .then(data => {
                 if (data.insertedId) {
-                  setIsLoading(false);
-                  toast.success('User created sucessfully')
+                  // setIsLoading(false);
                   navigate('/dashbord');
+                  toast.success('User created sucessfully')
                 }
               })
           })
@@ -61,8 +61,6 @@ const SignUp = () => {
         toast.error('can not sign up')
         console.log(error);
       })
-
-
     reset();
   }
 

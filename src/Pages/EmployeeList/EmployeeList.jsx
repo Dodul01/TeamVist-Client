@@ -16,6 +16,7 @@ const EmployeeList = () => {
   const [allUsers, setAllUsers] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const handleVerify = (data) => {
     fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`, {
@@ -38,21 +39,36 @@ const EmployeeList = () => {
     setShowModal(true);
   }
 
+
   useEffect(() => {
-    const unsubscribe = () => {
-      fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`)
-        .then((res) => res.json())
-        .then(data => setUserData(data[0]))
+    const fetchData = async () => {
+      try {
+        const userDataResponse = await fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`);
+        const userDataJson = await userDataResponse.json();
+        setUserData(userDataJson[0]);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
 
-      fetch('https://team-vista-server.vercel.app/users')
-        .then((res) => res.json())
-        .then(data => setAllUsers(data))
-    }
+      try {
+        const allUsersResponse = await fetch('https://team-vista-server.vercel.app/users');
+        const allUsersJson = await allUsersResponse.json();
+        setAllUsers(allUsersJson);
+      } catch (error) {
+        console.error('Error fetching all users data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return () => {
-      unsubscribe();
-    }
-  }, [user, isLoading, allUsers])
+    fetchData();
+  }, [user, loading, allUsers]);
+
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
 
   return (
     <div className='min-h-screen mx-5'>
@@ -91,7 +107,7 @@ const EmployeeList = () => {
                       : <FaSquareXmark onClick={() => handleVerify(data)} className="text-3xl text-red-500 cursor-pointer" />
                     }</td>
                     <td className="flex p-1 border">
-                      <button onClick={()=> handleModal(data)} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition' disabled={!data.isVerifyed}><MdOutlinePayment /> Pay</button>
+                      <button onClick={() => handleModal(data)} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition' disabled={!data.isVerifyed}><MdOutlinePayment /> Pay</button>
                       <Link to={`/dashbord/details/${data.email}`} className='ml-3 text-base flex items-center font-normal border-2 border-solid rounded-lg p-2 bg-[#051d2a] text-white transition'><BiSolidUserDetail /> Details</Link>
                     </td>
                   </tr>

@@ -11,11 +11,13 @@ import EmployeeList from "../Pages/EmployeeList/EmployeeList";
 import Progress from "../Pages/Progress/Progress";
 import WorkSheet from "../Components/WorkSheet/WorkSheet";
 import PaymentHistory from "../Pages/PaymentHistory/PaymentHistory";
+import Error from "../Pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',

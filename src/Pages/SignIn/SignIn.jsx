@@ -6,7 +6,7 @@ import useAppContext from "../../hooks/useAppContext";
 import { useEffect, useState } from "react";
 
 const SignIn = () => {
-  const { signInUser, setUserRole } = useAppContext();
+  const { signInUser, setUserRole, setIsLoading } = useAppContext();
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [firedList, setFiredList] = useState([]);
 
@@ -15,28 +15,28 @@ const SignIn = () => {
   const onSubmit = (data) => {
     const isFired = firedList.some((firedUser) => firedUser.email === data.email)
 
-    if(isFired){
+    if (isFired) {
       return toast.error("Sorry Can't Sign In You Are Fired")
     }
 
     signInUser(data.email, data.password)
       .then((userCurrent) => {
         toast.success('Log In Sucessfully');
+        setIsLoading(false)
         navigate('/dashbord')
       })
       .catch((error) => {
         console.log(error);
         toast.error('Can not log in')
       })
-
     reset()
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch('https://team-vista-server.vercel.app/firedList')
-        .then((res)=> res.json())
-        .then(data => setFiredList(data))
-  },[])
+      .then((res) => res.json())
+      .then(data => setFiredList(data))
+  }, [])
 
   return (
     <div className="flex lg:flex-row flex-col items-center justify-center max-w-[1660px] h-screen gap-4 mx-auto text-[#051d2a]">

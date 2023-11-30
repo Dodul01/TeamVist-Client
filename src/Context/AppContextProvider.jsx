@@ -27,7 +27,6 @@ const AppContextProvider = ({ children }) => {
 
 
   const updateUserProfile = (name, photo) => {
-    setIsLoading(true);
     return updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
   }
 
@@ -47,8 +46,8 @@ const AppContextProvider = ({ children }) => {
     const unsubscribe = () => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          setUser(user);
           setIsLoading(false);
+          setUser(user);
         } else {
           console.log('User Not Found');
           setIsLoading(false)
@@ -56,6 +55,7 @@ const AppContextProvider = ({ children }) => {
       })
     }
 
+    setIsLoading(false)
     return () => {
       unsubscribe()
     }

@@ -8,6 +8,7 @@ const DashbordNav = () => {
     const [userData, setUserData] = useState({});
     const { signOutUser } = useAppContext();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const handleSignOut = () => {
         signOutUser()
@@ -24,7 +25,17 @@ const DashbordNav = () => {
         fetch(`https://team-vista-server.vercel.app/users?email=${user?.email}`)
             .then((res) => res.json())
             .then(data => setUserData(data[0]))
-    }, [isLoading])
+
+        if (userData?.userRole) {
+            setLoading(false);
+        }
+    }, [isLoading, userData?.userRole])
+
+
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div>
