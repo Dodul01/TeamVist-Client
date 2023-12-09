@@ -5,7 +5,7 @@
 <h4>Password: 123456</h4>
 
 
-<h3>Project Features</h3>
+<h3>Key Features</h3>
 <ul>
   <li>Email Password Authentication</li>
   <li>User Managment Based On user Role</li>
