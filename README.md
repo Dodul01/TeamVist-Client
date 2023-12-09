@@ -1,5 +1,4 @@
-<h1 align="center"><a href="https://teamvista-85a36.firebaseapp.com/">Team Vista</a></h1>
-
+<h1 align="center"><a href="https://cluttered-beef.surge.sh">Team Vista</a></h1>
 <h3>Credentials</h3>
 <h4>Email: admin@gmail.com</h4>
 <h4>Password: 123456</h4>
